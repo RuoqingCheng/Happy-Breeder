@@ -1,0 +1,230 @@
+{% extends "cats.html" %}
+{% load static %}
+
+{% block headcontent %}
+
+{% endblock %}
+
+{% block canvas %}
+
+<div class="canvas-blue">
+
+  <div class="top-function text-center">
+
+    <!-- Add top functional icons -->
+    <div class="icon-label" onclick="Visit_Ajax();">
+        <a href="#"><img src="{% static "imgs/icons/paw.png" %}" alt="Go to other breeder's home" class="zoom-in"></a>
+        <p>Visit Other</p>
+    </div>
+
+    <div class="icon-label">
+        <a href="#" data-toggle="modal" data-target="#exampleModalScrollable" style="max-width: 540px;"><img src="{% static "imgs/icons/store.png" %}" alt="Store" class="zoom-in"></a>
+        <p>Store</p>
+    </div>
+
+    <div class="icon-label">
+        <a class="mate" href="#"><img src="{% static "imgs/icons/mate.png" %}" alt="Mate" class="zoom-in"></a>
+        <p>Mate</p>
+    </div>
+
+    <div class="icon-label">
+        <a href="#" data-toggle="modal" data-target="#historyModalScrollable" style="max-width: 340px;"><img src="{% static "imgs/icons/history.png" %}" alt="View visitors' history" class="zoom-in"></a>
+        <p>Visitor History</p>
+    </div>
+    <!-- end top functional icons -->
+
+    <!-- add skill bar -->
+    <div class="block-skillbar">
+
+      <!-- <div class="skillbar clearfix " data-percent="{{user.experience}}">
+      	<div class="skillbar-title"><span>Exp</span></div>
+      	<div class="skillbar-bar" style="background:skyblue;"></div>
+      	<div class="skill-bar-percent">{{user.experience}}/5000</div>
+      </div> -->
+
+      <div class="skillbar clearfix " id="fortune_pct" data-percent="{{user.fortune}}">
+      	<div class="skillbar-title"><span>$</span></div>
+      	<div class="skillbar-bar" style="background:gold;"></div>
+      	<div class="skill-bar-percent" id="fortune">{{user.fortune}}/5000</div>
+      </div>
+      <p>1 furball = 1 fortune</p>
+
+    </div>
+    <!-- End Skill Bar -->
+  </div>
+  <!-- End of top functional bar -->
+
+  <!-- add side functional icons -->
+  <div class="container text-center">
+    <div class="icon-label icon-label-right">
+        <a id="brush" href="#"><img src="{% static "imgs/icons/brush.png" %}" alt="Brush" class="zoom-in"></a>
+        <p>Brush</p>
+    </div>
+  </div>
+
+  <div class="container text-center">
+    <div class="icon-label icon-label-right">
+        <a id="scoop" href="#"><img src="{% static "imgs/icons/scoop.png" %}" alt="Scoop" class="zoom-in"></a>
+        <p>Scoop</p>
+    </div>
+  </div>
+
+  <div class="container text-center">
+    <div class="icon-label icon-label-right">
+        <a id="sell" href="#"><img src="{% static "imgs/icons/sell_cat.png" %}" alt="Sell Cat" class="zoom-in"></a>
+        <p>Sell</p>
+    </div>
+  </div>
+  <!-- end side functional icons -->
+
+  <!-- litter box  -->
+  <img class="litter-box"src="{% static "imgs/litter.png" %}" alt="Litter box">
+
+  <!-- Cat -->
+
+  <!-- Store -->
+  <!-- Code for store pop up below -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="exampleModalScrollableTitle">Store</h4>
+        </div>
+        <!-- below is the body of modal-->
+        <div class="modal-body" id="store_items">
+
+          <!-- below is card1 -->
+          {% for item in items %}
+          <div class="card">
+            <div class="row">
+              <div class="col-sm-7 col-md-7 card-body">
+                  <h5 class="card-title">{{item.name}}</h5>
+                  <p class="card-text1">+ {{item.info_level}} {{item.info_type}} level</p>
+                  <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                      <div class="row">
+                        <div class="col-sm-3 col-md-3">
+                          <h6>Price: </h6>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                          <div id="{{item.id}}price" name="price" value="{{item.price}}" style="max-width: 54px; max-height: 30px; text-align: center; padding-top: 8px;">{{item.price}}</div>
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                          <h6>furballs </h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="col-md-5">
+                <img src="{{ item.picture.url}}" alt="milk" class="zoom-in">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-6"></div>
+              <div class="col-md-3">
+                <!-- quantity increment buttons: cited from https://bootsnipp.com/snippets/e3q3a -->
+                <div class="input-group" style="width: fit-content;">
+                  <span class="input-group-btn">
+                    <button type="button" id="{{item.id}}" class="btn-minus btn" data-type="minus" data-field="" style="width: 10px;">
+                      <span>-</span>
+                    </button>
+                  </span>
+                  <input type="text" id="{{item.id}}quantity" class="form-control input-number quantity" value="1" min="1" style="max-width: 54px; text-align: center;">
+                  <span class="input-group-btn">
+                    <button type="button" id="{{item.id}}" class="btn-plus btn" data-type="plus" data-field="" style="width: 10px;">
+                      <span>+</span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <button type="button" id="{{item.id}}" class="btn-primary btn-lg btn_buy">Buy</button>
+              </div>
+            </div>
+          </div>
+          <br>
+          <hr>
+          <!-- end of card1 -->
+          {% endfor %}
+        </div>
+        <!-- end of the modal body -->
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      <!-- end of the modal content -->
+
+    </div>
+    <!-- end of the modal-dialog modal-dialog-scrollable -->
+  </div>
+  <!-- end of the Modal -->
+
+</div>
+
+<!--Modal for visit history-->
+<div class="modal fade" id="historyModalScrollable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Visit History</h4>
+          </div>
+          <div class="modal-body">
+            {% for r in vr %}
+            <ul class="manual">
+              <li>
+                {% if r.get_furball_amount != 0 %}
+                {{r.guest.nickname}} got {{r.get_furball_amount}} furballs from you in {{r.time}}
+                {% else %}
+                {{r.guest.nickname}} visited you in {{r.time}}
+                {% endif %}
+              </li>
+            </ul>
+            {% endfor %}
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <!-- <button type="button" class="btn btn-primary">提交更改</button> -->
+          </div>
+      </div><!-- /.modal-content -->
+  </div><!-- /.modal -->
+</div>
+<!--End of modal for visit history-->
+
+<!-- Warehouse -->
+<div class="container warehouse text-center" id="warehouse">
+  <div class="icon-label warehouse-title">
+    <h1>WAREHOUSE</h1>
+  </div>
+
+  {% for obj in warehouse_items %}
+  <div id="{{obj.id}}" class="icon-label warehouse-item">
+      <a class="item" id="{{obj.item.name}}" href="#"><img src={{obj.item.picture.url}} alt="{{obj.item.name}}" class="zoom-in"></a>
+      <p>{{obj.item.name}}</p>
+      <p id="item_qt_{{obj.item.name}}">x {{obj.amount}}</p>
+  </div>
+  {% endfor %}
+
+</div>
+
+<div class = "cat" id="cat">
+</div>
+
+<script type="text/javascript" src="{% static "js/skillbar.js" %}"></script>
+<script type="text/javascript" src="{% static "js/cat.js" %}"></script>
+<script type="text/javascript" src="{% static "js/house.js" %}"></script>
+
+<form style="display: hidden;" action="/other/" method="POST" id="visit_form_post">
+  {% csrf_token %}
+</form>
+
+{% endblock %}

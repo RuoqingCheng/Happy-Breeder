@@ -1,0 +1,511 @@
+{% extends "header.html" %}
+{% load static %}
+{% block content %}
+
+
+
+<div class="container canvas-blue">
+
+  <div class="container text-center">
+
+    <!-- Add top functional icons -->
+    <div class="icon-label">
+      <a href="#"><img src="{% static "imgs/icons/paw.png" %}" alt="Go to other breeder's home" class="zoom-in"></a>
+      <p>Visit Other</p>
+    </div>
+
+    <div class="icon-label">
+      <a href="#" data-toggle="modal" data-target="#exampleModalScrollable" style="max-width: 540px;"><img
+          src="{% static "imgs/icons/store.png" %}" alt="Store" class="zoom-in"></a>
+      <p>Store</p>
+    </div>
+
+    <div class="icon-label">
+      <a href="#"><img src="{% static "imgs/icons/mate.png" %}" alt="Mate" class="zoom-in"></a>
+      <p>Mate</p>
+    </div>
+
+    <div class="icon-label">
+      <a href="#"><img src="{% static "imgs/icons/history.png" %}" alt="View visitors' history" class="zoom-in"></a>
+      <p>Vistor History</p>
+    </div>
+    <!-- top functional icons -->
+
+    <div class="container skill-bar">
+
+    </div>
+
+  </div>
+
+
+  <div class="container text-center m-t-70">
+    <div class="icon-label icon-label-right">
+      <a href="#"><img src="{% static "imgs/icons/brush.png" %}" alt="Brush" class="zoom-in"></a>
+      <p>Brush</p>
+    </div>
+  </div>
+
+  <div class="container text-center">
+    <div class="icon-label icon-label-right">
+      <a href="#"><img src="{% static "imgs/icons/scoop.png" %}" alt="Scoop" class="zoom-in"></a>
+      <p>Scoop</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- Warehouse -->
+<div class="container warehouse">
+  <div class="icon-label warehouse-title">
+    <h1>WAREHOUSE</h1>
+  </div>
+
+  <div class="icon-label warehouse-item">
+    <a href="#"><img src="{% static "imgs/icons/milk.png" %}" alt="milk" class="zoom-in"></a>
+    <p>milk</p>
+    <p>x 5</p>
+  </div>
+
+  <div class="icon-label warehouse-item">
+    <a href="#"><img src="{% static "imgs/icons/can.png" %}" alt="can food" class="zoom-in"></a>
+    <p>can food</p>
+    <p>x 5</p>
+  </div>
+
+  <div class="icon-label warehouse-item">
+    <a href="#"><img src="{% static "imgs/icons/grass.png" %}" alt="cat grass" class="zoom-in"></a>
+    <p>grass</p>
+    <p>x 5</p>
+  </div>
+
+  <div class="icon-label warehouse-item">
+    <a href="#"><img src="{% static "imgs/icons/medicine.png" %}" alt="medicine" class="zoom-in"></a>
+    <p>medicine</p>
+    <p>x 5</p>
+  </div>
+
+</div>
+
+
+
+<!-- Code for store pop up below -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="exampleModalScrollableTitle">Store</h4>
+      </div>
+      <!-- below is the body of modal-->
+      <div class="modal-body">
+
+        <!-- below is card1 -->
+        <div class="card">
+          <div class="row">
+            <div class="col-md-7">
+              <div class="card-body">
+                <h5 class="card-title">Milk</h5>
+                <p class="card-text1">+ 200 food level</p>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <h6>Price: </h6>
+                      </div>
+                      <div class="col-md-6">
+                        <input type="text" id="price1" name="price1" class="form-control input-number" value="60"
+                          min="60" style="max-width: 54px; max-height: 30px; text-align: center;">
+                      </div>
+                      <div class="col-md-3">
+                        <h6>furballs </h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <img src="{% static "imgs/icons/milk.png" %}" alt="milk" class="zoom-in">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-6"></div>
+            <div class="col-md-3">
+              <!-- quantity increment buttons: cited from https://bootsnipp.com/snippets/e3q3a -->
+              <div class="input-group" style="width: fit-content;">
+                <span class="input-group-btn">
+                  <button type="button" class="btn-minus1 btn" data-type="minus" data-field="" style="width: 10px;">
+                    <span>-</span>
+                  </button>
+                </span>
+                <input type="text" id="quantity1" name="quantity1" class="form-control input-number" value="1" min="1"
+                  max="100" style="max-width: 54px; text-align: center;">
+                <span class="input-group-btn">
+                  <button type="button" class="btn-plus1 btn" data-type="plus" data-field="" style="width: 10px;">
+                    <span>+</span>
+                  </button>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <button type="button" class="btn-primary btn-lg">Buy</button>
+            </div>
+          </div>
+        </div>
+        <br>
+        <hr>
+        <!-- end of card1 -->
+
+
+        <!-- below is card2 -->
+        <div class="card">
+          <div class="row">
+            <div class="col-md-7">
+              <div class="card-body">
+                <h5 class="card-title">Cat Can</h5>
+                <p class="card-text1">+ 180 food level</p>
+                <div class="row">
+                  <div class="col-md-6">
+                      <div class="row">
+                          <div class="col-md-3">
+                            <h6>Price: </h6>
+                          </div>
+                          <div class="col-md-6">
+                            <input type="text" id="price2" name="price2" class="form-control input-number" value="50"
+                              min="50" style="max-width: 54px; max-height: 30px; text-align: center;">
+                          </div>
+                          <div class="col-md-3">
+                            <h6>furballs </h6>
+                          </div>
+                        </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <img src="{% static "imgs/icons/can.png" %}" alt="milk" class="zoom-in">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-6"></div>
+            <div class="col-md-3">
+              <!-- quantity increment buttons: cited from https://bootsnipp.com/snippets/e3q3a -->
+              <div class="input-group" style="width: fit-content;">
+                <span class="input-group-btn">
+                  <button type="button" class="btn-minus2 btn" data-type="minus" data-field="" style="width: 10px;">
+                    <span>-</span>
+                  </button>
+                </span>
+                <input type="text" id="quantity2" name="quantity2" class="form-control input-number" value="1" min="1"
+                  max="100" style="max-width: 54px; text-align: center;">
+                <span class="input-group-btn">
+                  <button type="button" class="btn-plus2 btn" data-type="plus" data-field="" style="width: 10px;">
+                    <span>+</span>
+                  </button>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <button type="button" class="btn-primary btn-lg">Buy</button>
+            </div>
+          </div>
+        </div>
+        <br>
+        <hr>
+        <!-- end of card2 -->
+
+
+
+        <!-- below is card3 -->
+        <div class="card">
+          <div class="row">
+            <div class="col-md-7">
+              <div class="card-body">
+                <h5 class="card-title">Cat Grass</h5>
+                <p class="card-text1">+ 250 food level</p>
+                <p class="card-text2">+ 50 health level</p>
+                <div class="row">
+                  <div class="col-md-6">
+                      <div class="row">
+                          <div class="col-md-3">
+                            <h6>Price: </h6>
+                          </div>
+                          <div class="col-md-6">
+                            <input type="text" id="price3" name="price3" class="form-control input-number" value="70"
+                              min="70" style="max-width: 54px; max-height: 30px; text-align: center;">
+                          </div>
+                          <div class="col-md-3">
+                            <h6>furballs </h6>
+                          </div>
+                        </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <img src="{% static "imgs/icons/grass.png" %}" alt="milk" class="zoom-in">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-6"></div>
+            <div class="col-md-3">
+              <!-- quantity increment buttons: cited from https://bootsnipp.com/snippets/e3q3a -->
+              <div class="input-group" style="width: fit-content;">
+                <span class="input-group-btn">
+                  <button type="button" class="btn-minus3 btn" data-type="minus" data-field="" style="width: 10px;">
+                    <span>-</span>
+                  </button>
+                </span>
+                <input type="text" id="quantity3" name="quantity3" class="form-control input-number" value="1" min="1"
+                  max="100" style="max-width: 54px; text-align: center;">
+                <span class="input-group-btn">
+                  <button type="button" class="btn-plus3 btn" data-type="plus" data-field="" style="width: 10px;">
+                    <span>+</span>
+                  </button>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <button type="button" class="btn-primary btn-lg">Buy</button>
+            </div>
+          </div>
+        </div>
+        <br>
+        <hr>
+        <!-- end of card3 -->
+
+
+
+        <!-- below is card4 -->
+        <div class="card">
+          <div class="row">
+            <div class="col-md-7">
+              <div class="card-body">
+                <h5 class="card-title">Medicine</h5>
+                <p class="card-text2">+ 300 health level</p>
+                <div class="row">
+                  <div class="col-md-6">
+                      <div class="row">
+                          <div class="col-md-3">
+                            <h6>Price: </h6>
+                          </div>
+                          <div class="col-md-6">
+                            <input type="text" id="price4" name="price4" class="form-control input-number" value="100"
+                              min="100" style="max-width: 54px; max-height: 30px; text-align: center;">
+                          </div>
+                          <div class="col-md-3">
+                            <h6>furballs </h6>
+                          </div>
+                        </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <img src="{% static "imgs/icons/medicine.png" %}" alt="milk" class="zoom-in">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-6"></div>
+            <div class="col-md-3">
+              <!-- quantity increment buttons: cited from https://bootsnipp.com/snippets/e3q3a -->
+              <div class="input-group" style="width: fit-content;">
+                <span class="input-group-btn">
+                  <button type="button" class="btn-minus4 btn" data-type="minus" data-field="" style="width: 10px;">
+                    <span>-</span>
+                  </button>
+                </span>
+                <input type="text" id="quantity4" name="quantity4" class="form-control input-number" value="1" min="1"
+                  max="100" style="max-width: 54px; text-align: center;">
+                <span class="input-group-btn">
+                  <button type="button" class="btn-plus4 btn" data-type="plus" data-field="" style="width: 10px;">
+                    <span>+</span>
+                  </button>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <button type="button" class="btn-primary btn-lg">Buy</button>
+            </div>
+          </div>
+        </div>
+        <br>
+        <!-- end of card4 -->
+
+
+
+      </div>
+      <!-- end of the modal body -->
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    <!-- end of the modal content -->
+
+
+  </div>
+  <!-- end of the modal-dialog modal-dialog-scrollable -->
+</div>
+<!-- end of the Modal -->
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  $(document).ready(function () {
+    // increment card1
+    $('.btn-plus1').click(function (e) {
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#quantity1').val()); // .val() sets the value of #quantity
+      $('#quantity1').val(q + 1);
+    });
+
+    // decrement card1
+    $('.btn-minus1').click(function (e) {
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#quantity1').val()); // .val() sets the value of #quantity
+      if (q > 1) {
+        $('#quantity1').val(q - 1);
+      }
+    });
+
+    // increment price1
+    $('.btn-plus1').click(function (e) {
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#price1').val()); // .val() sets the value of #quantity
+      $('#price1').val(q + 60);
+    });
+
+    // decrement price1
+    $('.btn-minus1').click(function (e) {
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#price1').val()); // .val() sets the value of #quantity
+      if (q > 60) {
+        $('#price1').val(q - 60);
+      }
+    });
+
+
+
+    // increment card2
+    $('.btn-plus2').click(function (e) {
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#quantity2').val()); // .val() sets the value of #quantity
+      $('#quantity2').val(q + 1);
+    });
+    // decrement card2
+    $('.btn-minus2').click(function (e) {
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#quantity2').val()); // .val() sets the value of #quantity
+      if (q > 1) {
+        $('#quantity2').val(q - 1);
+      }
+    });
+
+
+    // increment price2
+    $('.btn-plus2').click(function (e) {
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#price2').val()); // .val() sets the value of #quantity
+      $('#price2').val(q + 50);
+    });
+
+    // decrement price2
+    $('.btn-minus2').click(function (e) {
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#price2').val()); // .val() sets the value of #quantity
+      if (q > 50) {
+        $('#price2').val(q - 50);
+      }
+    });
+
+
+
+    // increment card3
+    $('.btn-plus3').click(function (e) {
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#quantity3').val()); // .val() sets the value of #quantity
+      $('#quantity3').val(q + 1);
+    });
+    // decrement card3
+    $('.btn-minus3').click(function (e) {
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#quantity3').val()); // .val() sets the value of #quantity
+      if (q > 1) {
+        $('#quantity3').val(q - 1);
+      }
+    });
+
+
+    // increment price3
+    $('.btn-plus3').click(function (e) {
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#price3').val()); // .val() sets the value of #quantity
+      $('#price3').val(q + 70);
+    });
+
+    // decrement price3
+    $('.btn-minus3').click(function (e) {
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#price3').val()); // .val() sets the value of #quantity
+      if (q > 70) {
+        $('#price3').val(q - 70);
+      }
+    });
+
+
+
+    // increment card4
+    $('.btn-plus4').click(function (e) {
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#quantity4').val()); // .val() sets the value of #quantity
+      $('#quantity4').val(q + 1);
+    });
+    // decrement card4
+    $('.btn-minus4').click(function (e) {
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#quantity4').val()); // .val() sets the value of #quantity
+      if (q > 1) {
+        $('#quantity4').val(q - 1);
+      }
+    });
+
+
+     // increment price4
+     $('.btn-plus4').click(function (e) {
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#price4').val()); // .val() sets the value of #quantity
+      $('#price4').val(q + 100);
+    });
+
+    // decrement price4
+    $('.btn-minus4').click(function (e) {
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#price4').val()); // .val() sets the value of #quantity
+      if (q > 100) {
+        $('#price4').val(q - 100);
+      }
+    });
+
+  });
+</script>
+
+{% endblock %}

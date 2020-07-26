@@ -1,0 +1,527 @@
+{% extends "header.html" %}
+{% load static %}
+
+{% block headcontent %}
+
+{% endblock %}
+{% block content %}
+
+
+<div class="canvas-blue">
+
+  <div class="top-function text-center">
+
+    <!-- Add top functional icons -->
+    <div class="icon-label" onclick="Visit_Ajax();">
+        <a href="#"><img src="{% static "imgs/icons/paw.png" %}" alt="Go to other breeder's home" class="zoom-in"></a>
+        <p>Visit Other</p>
+    </div>
+
+    <div class="icon-label">
+        <a href="#" data-toggle="modal" data-target="#exampleModalScrollable" style="max-width: 540px;"><img src="{% static "imgs/icons/store.png" %}" alt="Store" class="zoom-in"></a>
+        <p>Store</p>
+    </div>
+
+    <div class="icon-label">
+        <a href="#"><img src="{% static "imgs/icons/mate.png" %}" alt="Mate" class="zoom-in"></a>
+        <p>Mate</p>
+    </div>
+
+    <div class="icon-label">
+        <a href="#"><img src="{% static "imgs/icons/history.png" %}" alt="View visitors' history" class="zoom-in"></a>
+        <p>Vistor History</p>
+    </div>
+    <!-- end top functional icons -->
+
+
+    <!-- add skill bar -->
+    <div class="block-skillbar">
+
+      <div class="skillbar clearfix " data-percent="{{user.experience}}">
+      	<div class="skillbar-title"><span>Exp</span></div>
+      	<div class="skillbar-bar" style="background:skyblue;"></div>
+      	<div class="skill-bar-percent">{{user.experience}}/1000</div>
+      </div>
+
+      <div class="skillbar clearfix " id="fortune_pct" data-percent="{{user.fortune}}">
+      	<div class="skillbar-title"><span>$</span></div>
+      	<div class="skillbar-bar" style="background:gold;"></div>
+      	<div class="skill-bar-percent" id="fortune">{{user.fortune}}/1000</div>
+      </div>
+
+    </div>
+    <!-- End Skill Bar -->
+  </div>
+  <!-- End of top functional bar -->
+
+
+
+  <!-- add side functional icons -->
+  <div class="container text-center m-t-70">
+    <div class="icon-label icon-label-right">
+        <a id="brush" href="#"><img src="{% static "imgs/icons/brush.png" %}" alt="Brush" class="zoom-in"></a>
+        <p>Brush</p>
+    </div>
+  </div>
+
+  <div class="container text-center">
+    <div class="icon-label icon-label-right">
+        <a id="scoop" href="#"><img src="{% static "imgs/icons/scoop.png" %}" alt="Scoop" class="zoom-in"></a>
+        <p>Scoop</p>
+    </div>
+  </div>
+  <!-- end side functional icons -->
+
+  <!-- litter box  -->
+  <img class="litter-box"src="{% static "imgs/litter.png" %}" alt="Litter box">
+
+  <!-- Cat -->
+
+  <!-- Store -->
+  <!-- Code for store pop up below -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="exampleModalScrollableTitle">Store</h4>
+        </div>
+        <!-- below is the body of modal-->
+        <div class="modal-body">
+
+          <!-- below is card1 -->
+          {% for item in items %}
+          <div class="card">
+            <div class="row">
+              <div class="col-sm-7 col-md-7 card-body">
+                  <h5 class="card-title">{{item.name}}</h5>
+                  <p class="card-text1">+ {{item.info_level}} {{item.info_type}} level</p>
+                  <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                      <div class="row">
+                        <div class="col-sm-3 col-md-3">
+                          <h6>Price: </h6>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                          <input type="text" id="{{item.id}}price" name="price" class="form-control input-number price" value="{{item.price}}" style="max-width: 54px; max-height: 30px; text-align: center;">
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                          <h6>furballs </h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="col-md-5">
+                <img src="{{ item.picture.url}}" alt="milk" class="zoom-in">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-6"></div>
+              <div class="col-md-3">
+                <!-- quantity increment buttons: cited from https://bootsnipp.com/snippets/e3q3a -->
+                <div class="input-group" style="width: fit-content;">
+                  <span class="input-group-btn">
+                    <button type="button" id="{{item.id}}" class="btn-minus btn" data-type="minus" data-field="" style="width: 10px;">
+                      <span>-</span>
+                    </button>
+                  </span>
+                  <input type="text" id="{{item.id}}quantity" class="form-control input-number quantity" value="1" min="1" style="max-width: 54px; text-align: center;">
+                  <span class="input-group-btn">
+                    <button type="button" id="{{item.id}}" class="btn-plus btn" data-type="plus" data-field="" style="width: 10px;">
+                      <span>+</span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <button type="button" id="{{item.id}}" class="btn-primary btn-lg btn_buy">Buy</button>
+              </div>
+            </div>
+          </div>
+          <br>
+          <hr>
+          <!-- end of card1 -->
+          {% endfor %}
+        </div>
+        <!-- end of the modal body -->
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      <!-- end of the modal content -->
+
+    </div>
+    <!-- end of the modal-dialog modal-dialog-scrollable -->
+  </div>
+  <!-- end of the Modal -->
+
+</div>
+
+
+<!-- Warehouse -->
+<div class="container warehouse text-center">
+  <div class="icon-label warehouse-title">
+    <h1>WAREHOUSE</h1>
+  </div>
+
+  {% for obj in warehouse_items %}
+  <div class="icon-label warehouse-item">
+      <a class="item" id="{{obj.item.name}}" href="#"><img src={{obj.item.picture.url}} alt="milk" class="zoom-in"></a>
+      <p>{{obj.item.name}}</p>
+      <p id="item_qt_{{obj.item.name}}">x {{obj.amount}}</p>
+  </div>
+  {% endfor %}
+
+</div>
+
+<div class = "cat" id="cat">
+</div>
+
+<script type="text/javascript" src="{% static "js/skillbar.js" %}"></script>
+<script type="text/javascript" src="{% static "js/cat.js" %}"></script>
+<script type="text/javascript" src="{% static "js/house.js" %}"></script>
+
+<script>
+  var CLICKED_BRUSH = 0;
+  var CLICKED_SCOOP = 0;
+  var CLICKED_ITEM = 0;
+  var ITEM = '';
+
+  function reset() {
+    CLICKED_BRUSH = 0;
+    CLICKED_SCOOP = 0;
+    CLICKED_ITEM = 0;
+  }
+
+  $(document).ready(function () {
+    // increment card1
+    $('.btn-plus').click(function (e) {
+      var item_id =  $(this).attr("id");
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#'+item_id+'quantity').val()); // .val() sets the value of #quantity
+      $('#'+item_id+'quantity').val(q + 1);
+      var p = parseInt($('#'+item_id+'price').val()); // .val() sets the value of #quantity
+      $('#'+item_id+'price').val(p/q  * (q+1));
+    });
+
+    $('.btn-minus').click(function (e) {
+      var item_id =  $(this).attr("id");
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#'+item_id+'quantity').val()); // .val() sets the value of #quantity
+      if (q > 1) {
+        $('#'+item_id+'quantity').val(q - 1);
+        var p = parseInt($('#'+item_id+'price').val()); // .val() sets the value of #quantity
+        $('#'+item_id+'price').val(p/q  * (q - 1));
+      }
+    });
+
+    $('.btn_buy').click(function (e) {
+      var item_id =  $(this).attr("id");
+      var amount = $('#'+item_id+'quantity').val();
+      $.ajax({
+          url: '{% url "buy_item" %}',
+          data: {
+            'request_purchase': 'true',
+            'item_id': item_id,
+            'amount': amount
+          },
+          dataType: 'json',
+          success: function (data) {
+            if(data.status == 'success'){
+                location.reload();
+            } else if(data.status == 'error'){
+                alert("You don't have enough furballs. Go pat some cats!");
+            }
+          }
+        });
+    });
+  });
+</script>
+
+<script type="text/javascript">
+
+  img_path = "{% static "imgs/"%}"
+
+  collie.ImageManager.add({
+    oreo: img_path + "oreo_nobgr.png",
+    cereal: img_path + "cereal_nobgr.png",
+    house: img_path + "house.png"
+  });
+
+  var layer = new collie.Layer({
+    width: 500,
+    height: 200,
+  });
+
+  movable_obj = null;
+  htStartPosition = {};
+  htSelectedDisplayObjectPosition = {};
+  oLayer = null;
+  var oLayer = new collie.Layer({
+    width: 900,
+    height: 400,
+  });
+
+  collie.util.addEventListener(window, "load", function () {
+    oConsole = new collie.FPSConsole({color: "rgba(0, 0, 0, 0)",}); //hide
+    var htParams = collie.util.queryString();
+    var nCount = htParams.count ? htParams.count : 100;
+    var htSize = {
+      width: document.body.clientWidth,
+      height: document.body.clientHeight
+    };
+
+    collie.Renderer.DEBUG_RENDERING_MODE = typeof htParams.dom != "undefined" ? "dom" : (typeof htParams.canvas !=
+      "undefined" ? "canvas" : "auto");
+
+    mousedown_fn = function (oEvent) {
+      if (oEvent.displayObject) {
+        if (oEvent.displayObject.get("class_name") == "Cat" || oEvent.displayObject.get("class_name") == "House" ) {
+          movable_obj = oEvent.displayObject;
+          movable_obj.set({
+            scaleX: oEvent.displayObject.get("scale") * 1.1,
+            scaleY: oEvent.displayObject.get("scale") * 1.1
+          });
+
+          htStartPosition = {
+            x: oEvent.x,
+            y: oEvent.y
+          };
+          htSelectedDisplayObjectPosition = {
+            x: movable_obj.get("x"),
+            y: movable_obj.get("y")
+          };
+        }
+
+        if (oEvent.displayObject.get("class_name") == "Cat") {
+          var action = '';
+          var has_action = 0;
+
+          if (CLICKED_BRUSH == 1) {
+            action = 'pat';
+            has_action = 1;
+          }
+
+          if (CLICKED_SCOOP == 1) {
+            action = 'scoop';
+            has_action = 1;
+          }
+
+          if (CLICKED_ITEM == 1) {
+            action = ITEM;
+            has_action = 1;
+            console.log('click item');
+          }
+
+          if (has_action == 1) {
+            reset();
+
+            $.ajax({
+              url: '{% url "action" %}',
+              data: {
+                'request_action': 'true',
+                'action': action,
+                'cat_id': oEvent.displayObject.get("id")
+              },
+              dataType: 'json',
+              success: function (data) {
+                if (data.status == 'success') {
+                  if (data.fur_amount !== undefined) {
+                    oEvent.displayObject.update_fur_amount(parseInt(data['fur_amount'])/100);
+                    console.log(data['fur_amount']);
+                    $("#fortune").text(data['user_fortune']+'/1000');
+                    $("#fortune_pct").attr('data-percent', data['user_fortune']);
+                  }
+
+                  if (data.level_clean !== undefined) {
+                    oEvent.displayObject.update_cleaness(parseInt(data['level_clean'])/100);
+                  }
+
+                  if (data.level_health !== undefined) {
+                    oEvent.displayObject.update_health(parseInt(data['level_health'])/100);
+                  }
+
+                  if (data.level_food !== undefined) {
+                    oEvent.displayObject.update_food(parseInt(data['level_food'])/100);
+                  }
+                  if (data.item !== undefined) {
+                    $('#' + 'item_qt_'+data.item).html('x' + data.item_qt);
+                  }
+                }
+
+              }
+            });
+          }
+        }
+      }
+      // movable_obj.show_skill_bar();
+    },
+
+    mouseup_fn = function (oEvent) {
+      if (movable_obj !== null) {
+        oEvent.displayObject.set({
+          scaleX: oEvent.displayObject.get("scale"),
+          scaleY: oEvent.displayObject.get("scale")
+        });
+
+        movable_obj = null;
+        htSelectedDisplayObjectPosition = htStartPosition = {};
+
+        oLayer.removeChild(oEvent.displayObject);
+        oLayer.addChild(oEvent.displayObject);
+      }
+    },
+
+    mousemove_fn = function (oEvent) {
+      if (movable_obj !== null) {
+        var x = htStartPosition.x - oEvent.x;
+        var y = htStartPosition.y - oEvent.y;
+        movable_obj.set({
+          x: htSelectedDisplayObjectPosition.x - x,
+          y: htSelectedDisplayObjectPosition.y - y
+        });
+
+        $.ajax({
+          type: "GET",
+          url: "{% url 'change_pos' %}",
+          data: {
+                  'request_change_pos': true,
+                  'x': movable_obj.get("x"),
+                  'y': movable_obj.get("y"),
+                  'cat_id': movable_obj.get("id")
+                },
+          error: function() {
+
+          },
+          success: function(data) {
+
+          }
+        });
+      }
+    }
+
+    var oSelectedDisplayObject = null;
+    var htStartPosition = {};
+    var htSelectedDisplayObjectPosition = {};
+
+    var cat_cereal = new Cat({
+      x: 300,
+      y: 20,
+      scaleX: 0.3,
+      scaleY: 0.3,
+      scale : 0.3,
+      useEvent: true,
+      backgroundImage: "cereal",
+      level_health: 0.2,
+      level_clean: 0.5,
+      level_food: 0.6,
+      id: "1"
+    }).addTo(oLayer).show_skill_bar();
+
+    var house = new House({
+      x: -100,
+      y: -50,
+      scaleX: 0.4,
+      scaleY: 0.4,
+      scale : 0.4,
+      useEvent: true,
+      backgroundImage: "house",
+      level: 1,
+      qt: 2,
+      capacity: 5,
+    }).addTo(oLayer)
+
+    oLayer.attach({
+      mousedown: mousedown_fn,
+      mouseup:mouseup_fn,
+      mousemove:mousemove_fn,
+    });
+
+    oConsole.load();
+    collie.Renderer.addLayer(oLayer);
+    collie.Renderer.load(document.getElementById("cat"));
+    collie.Renderer.start("30fps");
+  });
+
+  {% for c in cats %}
+  var cat = new Cat({
+    x: {{c.pos_x}},
+    y: {{c.pos_y}},
+    scaleX: 0.3,
+    scaleY: 0.3,
+    scale : 0.3,
+    useEvent: true,
+    backgroundImage: "oreo",
+    level_health: {{c.health}}/100,
+    level_clean: {{c.cleanness}}/100,
+    level_food: {{c.food_level}}/100,
+    fur_amount: {{c.fur_amount}}/100,
+    id: {{c.id}}
+  }).addTo(oLayer).show_skill_bar();
+
+  {% endfor %}
+
+</script>
+
+
+<!-- This is for brushing -->
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#brush').click(function (e) {
+      reset();
+      CLICKED_BRUSH = 1;
+    });
+
+    $('#scoop').click(function (e) {
+      reset();
+      CLICKED_SCOOP = 1;
+    });
+
+    $('.item').click(function (e) {
+      console.log('click item');
+      reset();
+      CLICKED_ITEM = 1;
+      ITEM = $(this).attr("id");
+    });
+  })
+</script>
+
+
+
+<!-- This is for visit other -->
+<script type="text/javascript">
+  var Visit_Ajax = function () {
+    console.log("visit other button pressed")
+    $.ajax({
+      type: "GET",
+      xhrFileds: { withCredentials: true },
+      url: "{% url 'go_visit' %}",
+      data: {
+              'visit': true,
+            },
+      error: function() {
+        alert("fail to visit others")
+      },
+      success: function(data) {
+        var json = eval(data);
+        if (json["success"]) {
+          // window.location.href = "http://127.0.0.1:8000/"+json["url"];
+          $("#visit_form_post").submit();
+        }
+      }
+    });
+  }
+</script>
+
+<form style="display: hidden;" action="/other/" method="POST" id="visit_form_post">
+  {% csrf_token %}
+</form>
+{% endblock %}

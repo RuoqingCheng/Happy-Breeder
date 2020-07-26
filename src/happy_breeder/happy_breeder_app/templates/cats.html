@@ -1,0 +1,526 @@
+{% extends "header.html" %}
+{% load static %}
+
+{% block headcontent %}
+{% endblock %}
+
+
+{% block content %}
+
+
+
+{% block canvas %}
+{% endblock %}
+
+<script>
+  var CLICKED_BRUSH = 0;
+  var CLICKED_BRUSH2 = 0;
+  var CLICKED_SCOOP = 0;
+  var CLICKED_ITEM = 0;
+  var CLICKED_SELL = 0;
+  var CLICKED_MATE = 0;
+  var ITEM = '';
+  var CAT1 = -1;
+
+  function reset() {
+    CLICKED_BRUSH = 0;
+    CLICKED_BRUSH2 = 0;
+    CLICKED_SCOOP = 0;
+    CLICKED_ITEM = 0;
+    CLICKED_SELL = 0;
+    CLICKED_MATE = 0;
+    CAT1 = -1;
+  }
+
+  $(document).ready(function () {
+    // increment card1
+    $('.btn-plus').click(function (e) {
+      var item_id =  $(this).attr("id");
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#'+item_id+'quantity').val()); // .val() sets the value of #quantity
+      $('#'+item_id+'quantity').val(q + 1);
+      var p = parseInt($('#'+item_id+'price').attr("value")); // .val() sets the value of #quantity
+      $('#'+item_id+'price').html(p * (q + 1));
+    });
+
+    $('.btn-minus').click(function (e) {
+      var item_id =  $(this).attr("id");
+      e.preventDefault(); // prevent btn click
+      var q = parseInt($('#'+item_id+'quantity').val()); // .val() sets the value of #quantity
+      if (q > 1) {
+        $('#'+item_id+'quantity').val(q - 1);
+        var p = parseInt($('#'+item_id+'price').attr("value")); // .val() sets the value of #quantity
+        $('#'+item_id+'price').html(p * (q - 1));
+      }
+    });
+
+    $('.btn_buy').click(function (e) {
+      var item_id =  $(this).attr("id");
+      var amount = $('#'+item_id+'quantity').val();
+      $.ajax({
+          url: '{% url "buy_item" %}',
+          data: {
+            'request_purchase': 'true',
+            'item_id': item_id,
+            'amount': amount
+          },
+          dataType: 'json',
+          success: function (data) {
+            if(data.status == 'success'){
+              img_path = "{% static "imgs/"%}";
+              // console.log(data);
+              $("#"+data["id"]).remove();
+              var html_text = ' \
+              <div id="' + data["id"] + '" class="icon-label warehouse-item"> \
+                  <a class="item" id="' + data["name"] + '" href="#"><img src=' + img_path + data["img"] + ' alt="' + data["name"] + '" class="zoom-in"></a> \
+                  <p>' + data["name"] + '</p> \
+                  <p id="item_qt_' + data["name"] + '">x ' + data["qt"] + '</p> \
+              </div>'
+              // console.log(html_text);
+              $("#warehouse").append(html_text);
+              $('.item').on("click", function (e) {
+                // console.log('click item');
+                reset();
+                CLICKED_ITEM = 1;
+                ITEM = $(this).attr("id");
+              });
+
+              $("#fortune").text(data['fortune']+'/5000');
+              $("#fortune_pct").attr('data-percent', data['fortune']);
+
+            } else if(data.status == 'error'){
+                alert("You don't have enough furballs. Go pat some cats!");
+            }
+          }
+        });
+    });
+  });
+</script>
+
+<script type="text/javascript">
+
+  img_path = "{% static "imgs/"%}"
+
+  collie.ImageManager.add({
+    house: img_path + "house.png",
+    mate: img_path + "heart.png"
+  });
+
+  var layer = new collie.Layer({
+    width: 500,
+    height: 200,
+  });
+
+  movable_obj = null;
+  htStartPosition = {};
+  htSelectedDisplayObjectPosition = {};
+  oLayer = null;
+  var oLayer = new collie.Layer({
+    width: 900,
+    height: 400,
+  });
+
+  collie.util.addEventListener(window, "load", function () {
+    oConsole = new collie.FPSConsole({color: "rgba(0, 0, 0, 0)",}); //hide
+    var htParams = collie.util.queryString();
+    var nCount = htParams.count ? htParams.count : 100;
+    var htSize = {
+      width: document.body.clientWidth,
+      height: document.body.clientHeight
+    };
+
+    collie.Renderer.DEBUG_RENDERING_MODE = typeof htParams.dom != "undefined" ? "dom" : (typeof htParams.canvas !=
+      "undefined" ? "canvas" : "auto");
+
+    mousedown_fn = function (oEvent) {
+      if (oEvent.displayObject) {
+        if (oEvent.displayObject.get("class_name") == "Cat" || oEvent.displayObject.get("class_name") == "House" ) {
+          movable_obj = oEvent.displayObject;
+          movable_obj.set({
+            scaleX: oEvent.displayObject.get("scale") * 1.1,
+            scaleY: oEvent.displayObject.get("scale") * 1.1
+          });
+
+          htStartPosition = {
+            x: oEvent.x,
+            y: oEvent.y
+          };
+          htSelectedDisplayObjectPosition = {
+            x: movable_obj.get("x"),
+            y: movable_obj.get("y")
+          };
+        }
+
+        if (oEvent.displayObject.get("class_name") == "Cat") {
+          var action = '';
+          var has_action = 0;
+          var cat_id2 = -1;
+          var call_daodan = 0
+
+          if (CLICKED_BRUSH == 1) {
+            action = 'pat';
+            has_action = 1;
+          }
+
+          if (CLICKED_BRUSH2 == 1) {
+            action = 'daodan';
+            call_daodan = 1;
+          }
+
+          if (CLICKED_SCOOP == 1) {
+            action = 'scoop';
+            has_action = 1;
+          }
+
+          if (CLICKED_ITEM == 1) {
+            console.log("click item");
+            action = ITEM;
+            has_action = 1;
+          }
+
+          if (CLICKED_SELL == 1) {
+            action = 'sell';
+            has_action = 1;
+          }
+
+
+          if (CLICKED_MATE == 1) {
+            if (CAT1 != -1) {
+              action = 'mate';
+              has_action = 1;
+              cat_id2 = CAT1;
+              // console.log("mate", CAT1);
+            } else {
+              CAT1 = oEvent.displayObject.get("id");
+            }
+          }
+
+          if (call_daodan == 1) {
+            reset();
+            var host_id = "{{host_id}}";
+            $.ajax({
+              url: '{%  url "daodan" %}',
+              data: {
+                'request_action': 'true',
+                'action': action,
+                'cat_id': oEvent.displayObject.get("id"),
+                'cat_id2': cat_id2,
+                'host_id': host_id,
+              },
+              dataType: 'json',
+              success: function (data) {
+                if (data.status == 'success') {
+                  if (data.fur_amount !== undefined && data.user_fortune !== undefined) {
+                    oEvent.displayObject.update_fur_amount(parseInt(data['fur_amount'])/10);
+                    // console.log(data['fur_amount']);
+                    $("#fortune").text(data['user_fortune']+'/5000');
+                    $("#fortune_pct").attr('data-percent', data['user_fortune']);
+                  }
+                }
+              }
+            });
+          };
+
+          if (has_action == 1) {
+            reset();
+
+            $.ajax({
+              url: '{% url "action" %}',
+              data: {
+                'request_action': 'true',
+                'action': action,
+                'cat_id': oEvent.displayObject.get("id"),
+                'cat_id2': cat_id2,
+              },
+              dataType: 'json',
+              success: function (data) {
+                if (data.mate_status != undefined && data.mate_status == 'fail') {
+                  // console.log("mate fail");
+                  alert(data["message"] + "Please choose cats with heart sign to mate!");
+                }
+                if (data.status == 'success') {
+                  if (data.fur_amount !== undefined && data.user_fortune !== undefined) {
+                    oEvent.displayObject.update_fur_amount(parseInt(data['fur_amount'])/100);
+                    // console.log(data['fur_amount']);
+                    $("#fortune").text(data['user_fortune']+'/5000');
+                    $("#fortune_pct").attr('data-percent', data['user_fortune']);
+                  }
+
+                  if (data.level_clean !== undefined) {
+                    oEvent.displayObject.update_cleaness(parseInt(data['level_clean'])/100);
+                  }
+
+                  if (data.level_health !== undefined) {
+                    oEvent.displayObject.update_health(parseInt(data['level_health'])/100);
+                  }
+
+                  if (data.level_food !== undefined) {
+                    oEvent.displayObject.update_food(parseInt(data['level_food'])/100);
+                  }
+                  if (data.item !== undefined) {
+                    console.log("qt-1");
+                    $('#' + 'item_qt_'+data.item).html('x' + data.item_qt);
+                  }
+                  if (data.delete_item !== undefined) {
+                    $("#" + data.delete_item).remove();
+                  }
+                  if (data.sold != undefined && data.sold == 'true') {
+                    oEvent.displayObject.set("visible", false);
+                    // console.log(oEvent.displayObject.get("id"));
+                    $("#fortune").text(data['user_fortune']+'/5000');
+                    $("#fortune_pct").attr('data-percent', data['user_fortune']);
+                  }
+
+                  if (data.mate_status != undefined && data.mate_status == 'success') {
+                    collie.ImageManager.removeImage("catimg");
+                    collie.ImageManager.add({
+                      "catimg": img_path + "cats/" + data.breed + ".png",
+                    });
+                    var cat = new Cat({
+                      x: data["pos_x"],
+                      y: data["pos_y"],
+                      scaleX: 0.3,
+                      scaleY: 0.3,
+                      scale : 0.3,
+                      useEvent: true,
+                      backgroundImage: "catimg",
+                      level_health: data["health"]/100,
+                      level_clean: data["cleanness"]/100,
+                      level_food: data["food_level"]/100,
+                      fur_amount: data["fur_amount"]/10,
+                      id: data["cat_id"],
+                      price: data["price"],
+                      age: data["age"],
+                    }).addTo(oLayer).show_skill_bar();
+
+                    update();
+
+                  }
+
+                }
+              }
+            });
+          }
+        }
+      }
+      // movable_obj.show_skill_bar();
+    },
+
+    mouseup_fn = function (oEvent) {
+      if (movable_obj !== null) {
+        oEvent.displayObject.set({
+          scaleX: oEvent.displayObject.get("scale"),
+          scaleY: oEvent.displayObject.get("scale")
+        });
+      if (movable_obj.get("class_name") == "Cat") {
+        $.ajax({
+          type: "GET",
+          url: "{% url 'change_pos' %}",
+          data: {
+                  'request_change_pos': true,
+                  'x': movable_obj.get("x"),
+                  'y': movable_obj.get("y"),
+                  'cat_id': movable_obj.get("id")
+                },
+          error: function() {
+          },
+          success: function(data) {
+          }
+        });
+      }
+
+        movable_obj = null;
+        htSelectedDisplayObjectPosition = htStartPosition = {};
+
+        oLayer.removeChild(oEvent.displayObject);
+        oLayer.addChild(oEvent.displayObject);
+      }
+    },
+
+    mousemove_fn = function (oEvent) {
+      if (movable_obj !== null) {
+        var x = htStartPosition.x - oEvent.x;
+        var y = htStartPosition.y - oEvent.y;
+        movable_obj.set({
+          x: htSelectedDisplayObjectPosition.x - x,
+          y: htSelectedDisplayObjectPosition.y - y
+        });
+
+
+      }
+    }
+
+    var oSelectedDisplayObject = null;
+    var htStartPosition = {};
+    var htSelectedDisplayObjectPosition = {};
+
+    var house = new House({
+      x: -100,
+      y: -80,
+      scaleX: 0.4,
+      scaleY: 0.4,
+      scale : 0.4,
+      useEvent: true,
+      backgroundImage: "house",
+      level: 1,
+      qt: 2,
+      capacity: 5,
+    }).addTo(oLayer)
+
+    oLayer.attach({
+      mousedown: mousedown_fn,
+      mouseup:mouseup_fn,
+      mousemove:mousemove_fn,
+    });
+
+    oConsole.load();
+    collie.Renderer.addLayer(oLayer);
+    collie.Renderer.load(document.getElementById("cat"));
+    collie.Renderer.start("30fps");
+  });
+
+
+
+  {% for c in cats %}
+  collie.ImageManager.add({
+    "{{c.breed}}": img_path + "cats/" + "{{c.breed}}" + ".png",
+  });
+  var cat = new Cat({
+    x: {{c.pos_x}},
+    y: {{c.pos_y}},
+    scaleX: 0.3,
+    scaleY: 0.3,
+    scale : 0.3,
+    useEvent: true,
+    backgroundImage: "{{c.breed}}",
+    level_health: {{c.health}}/100,
+    level_clean: {{c.cleanness}}/100,
+    level_food: {{c.food_level}}/100,
+    fur_amount: {{c.fur_amount}}/10,
+    id: {{c.id}},
+    price: {{c.price}},
+    age: {{c.age}}
+  }).addTo(oLayer).show_skill_bar();
+
+  {% endfor %}
+
+</script>
+
+
+<!-- This is for brushing -->
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#brush').click(function (e) {
+      reset();
+      CLICKED_BRUSH = 1;
+    });
+
+    $('#brush2').click(function (e) {
+      reset();
+      CLICKED_BRUSH2 = 1;
+    });
+
+    $('#scoop').click(function (e) {
+      reset();
+      CLICKED_SCOOP = 1;
+    });
+
+    $('#sell').click(function (e) {
+      reset();
+      CLICKED_SELL = 1;
+    });
+
+    $('.item').on("click", function (e) {
+      console.log('click item');
+      reset();
+      CLICKED_ITEM = 1;
+      ITEM = $(this).attr("id");
+    });
+
+    $('.mate').click(function (e) {
+      // console.log('click mate');
+      reset();
+      CLICKED_MATE = 1;
+    });
+  })
+</script>
+
+<!-- Auto Update -->
+<script type="text/javascript">
+  $(document).ready(function () {
+    update();
+
+    // console.log("get something")
+
+    var backend_time = parseInt("{{next_request}}") * 1000
+    // console.log(backend_time);
+    var date = new Date();
+    var frontend_time = date.getTime();
+    // console.log(frontend_time);
+    // console.log((backend_time-frontend_time)/100);
+    setInterval(function(){update();}, 10000);
+  })
+
+  function update() {
+    // console.log("Update now!!");
+    $.ajax({
+      type: "GET",
+      url: "{% url 'auto_update' %}",
+      success: function(data) {
+        children = oLayer.getChildren();
+        for (var i=0; i < children.length; i++) {
+          var c = children[i];
+          if (c instanceof Cat) {
+            cat_id = c.get("id");
+            if (data[cat_id] != undefined) {
+              food_level = data[cat_id]["food_level"];
+              cleanness = data[cat_id]["cleanness"];
+              health = data[cat_id]["health"];
+              fur_amount = data[cat_id]["fur_amount"];
+              price = data[cat_id]["price"]
+              age = data[cat_id]["age"]
+              console.log(data)
+              c.update_cleaness(parseInt(cleanness)/100);
+              c.update_health(parseInt(health)/100);
+              c.update_food(parseInt(food_level)/100);
+              c.update_fur_amount(parseInt(fur_amount)/10);
+              c.update_price_age(price, age);
+              if (data[cat_id]["ready_to_mate"]=="true") {
+                c.ready_to_mate();
+              } else {
+                c.not_ready_to_mate();
+              }
+              // console.log(food_level, cleanness, health);
+            }
+
+          }
+        }
+      }
+    });
+  }
+</script>
+
+<!-- This is for visit other -->
+<script type="text/javascript">
+  var Visit_Ajax = function () {
+    // console.log("visit other button pressed")
+    $.ajax({
+      type: "GET",
+      xhrFileds: { withCredentials: true },
+      url: "{% url 'go_visit' %}",
+      data: {
+              'visit': true,
+            },
+      error: function() {
+        alert("fail to visit others")
+      },
+      success: function(data) {
+        var json = eval(data);
+        if (json["success"]) {
+          $("#visit_form_post").submit();
+        }
+      }
+    });
+  }
+</script>
+{% endblock %}

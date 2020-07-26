@@ -1,0 +1,118 @@
+{% extends "header.html" %}
+{% load static %}
+{% block content %}
+
+<meta charset="utf-8">
+<meta name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+
+<div class="canvas-blue">
+  <div class="top-function text-center">
+    <!-- Add top functional icons -->
+    <div class="icon-label">
+      <a href="#"><img src="{% static "imgs/icons/paw.png" %}" alt="Go to other breeder's home" class="zoom-in"></a>
+      <p>Visit Other</p>
+    </div>
+
+    <div class="icon-label">
+      <a href="#"><img src="{% static "imgs/icons/store.png" %}" alt="Store" class="zoom-in"></a>
+      <p>Store</p>
+    </div>
+
+    <div class="icon-label">
+      <a href="#"><img src="{% static "imgs/icons/mate.png" %}" alt="Mate" class="zoom-in"></a>
+      <p>Mate</p>
+    </div>
+
+    <div class="icon-label">
+      <a href="#"><img src="{% static "imgs/icons/history.png" %}" alt="View visitors' history" class="zoom-in"></a>
+      <p>Vistor History</p>
+    </div>
+    <!-- end top functional icons -->
+
+
+    <!-- add skill bar -->
+    <div class="block-skillbar">
+      <div class="skillbar clearfix " data-percent="50%">
+        <div class="skillbar-title"><span>Exp</span></div>
+        <div class="skillbar-bar" style="background:#FFE26D;"></div>
+        <div class="skill-bar-percent">500/1000</div>
+      </div>
+
+      <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>$</span></div>
+        <div class="skillbar-bar" style="background:#99E897;"></div>
+        <div class="skill-bar-percent">250/1000</div>
+      </div>
+    </div>
+    <!-- End Skill Bar -->
+  </div>
+
+  <!-- add side functional icons -->
+  <div class="container text-center m-t-70">
+    <div class="icon-label icon-label-right">
+      <a href="#"><img src="{% static "imgs/icons/brush.png" %}" alt="Brush" class="zoom-in"></a>
+      <p>Brush</p>
+    </div>
+  </div>
+
+  <div class="container text-center">
+    <div class="icon-label icon-label-right">
+      <a href="#"><img src="{% static "imgs/icons/scoop.png" %}" alt="Scoop" class="zoom-in"></a>
+      <p>Scoop</p>
+    </div>
+  </div>
+</div>
+<!-- end side functional icons -->
+
+<!-- Warehouse -->
+<div class="container warehouse text-center">
+  <div class="icon-label warehouse-title">
+    <h1>WAREHOUSE</h1>
+  </div>
+
+  <div class="icon-label warehouse-item">
+    <a href="#"><img src="{% static "imgs/icons/milk.png" %}" alt="milk" class="zoom-in"></a>
+    <p>milk</p>
+    <p>x 5</p>
+  </div>
+
+  <div class="icon-label warehouse-item">
+    <a href="#"><img src="{% static "imgs/icons/can.png" %}" alt="can food" class="zoom-in"></a>
+    <p>can food</p>
+    <p>x 5</p>
+  </div>
+
+  <div class="icon-label warehouse-item">
+    <a href="#"><img src="{% static "imgs/icons/grass.png" %}" alt="cat grass" class="zoom-in"></a>
+    <p>grass</p>
+    <p>x 5</p>
+  </div>
+
+  <div class="icon-label warehouse-item">
+    <a href="#"><img src="{% static "imgs/icons/medicine.png" %}" alt="medicine" class="zoom-in"></a>
+    <p>medicine</p>
+    <p>x 5</p>
+  </div>
+
+</div>
+
+
+<div id="cat" style="width:70px;height:50px;background-color:#BDFDEF;position: absolute;"></div>
+<!--
+<div id="container" class="container">
+</div> -->
+
+<script type="text/javascript">
+  jQuery(document).ready(function () {
+    jQuery('.skillbar').each(function () {
+      jQuery(this).find('.skillbar-bar').animate({
+        width: jQuery(this).attr('data-percent')
+      }, 600);
+    });
+  });
+</script>
+
+<script type="text/javascript" src="{% static "js/cat.js" %}"></script>
+
+{% endblock %}

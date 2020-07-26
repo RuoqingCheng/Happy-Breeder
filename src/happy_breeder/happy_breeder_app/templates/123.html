@@ -1,0 +1,98 @@
+
+{% extends "header.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container canvas-blue">
+  <div class="container text-center">
+      <div class="icon-label">
+          <a href="#"><img src="{% static "imgs/icons/paw.png" %}" alt="Go to other breeder's home" class="zoom-in"></a>
+          <p>Visit Other</p>
+      </div>
+
+      <div class="icon-label">
+          <a href="#"><img src="{% static "imgs/icons/store.png" %}" alt="Store" class="zoom-in"></a>
+          <p>Store</p>
+      </div>
+
+      <div class="icon-label">
+          <a href="#"><img src="{% static "imgs/icons/mate.png" %}" alt="Mate" class="zoom-in"></a>
+          <p>Mate</p>
+      </div>
+
+      <div class="icon-label">
+          <a href="#"><img src="{% static "imgs/icons/history.png" %}" alt="View visitors' history" class="zoom-in"></a>
+          <p>Vistor History</p>
+      </div>
+  </div>
+
+  <div id = "cat" style="width:700px;height:500px;background-color:#BDFDEF;position: absolute;"></div>
+
+  <div class="container text-center m-t-pct-10">
+    <div class="icon-label align-right">
+        <a href="#"><img src="{% static "imgs/icons/brush.png" %}" alt="Brush" class="zoom-in"></a>
+        <p>Brush</p>
+    </div>
+  </div>
+
+  <div class="container text-center">
+    <div class="icon-label align-right">
+        <a href="#"><img src="{% static "imgs/icons/scoop.png" %}" alt="Scoop" class="zoom-in"></a>
+        <p>Scoop</p>
+    </div>
+  </div>
+</div>
+
+<!-- Warehouse -->
+<div class="container warehouse">
+  <div class="icon-label warehouse-item">
+    <h1>WAREHOUSE</h1>
+  </div>
+
+  <div class="icon-label warehouse-item">
+      <a href="#"><img src="{% static "imgs/icons/milk.png" %}" alt="milk" class="zoom-in"></a>
+      <p>milk</p>
+      <p>x 5</p>
+  </div>
+
+  <div class="icon-label warehouse-item">
+      <a href="#"><img src="{% static "imgs/icons/can.png" %}" alt="can food" class="zoom-in"></a>
+      <p>can food</p>
+      <p>x 5</p>
+  </div>
+
+  <div class="icon-label warehouse-item">
+      <a href="#"><img src="{% static "imgs/icons/grass.png" %}" alt="cat grass" class="zoom-in"></a>
+      <p>grass</p>
+      <p>x 5</p>
+  </div>
+
+  <div class="icon-label warehouse-item">
+      <a href="#"><img src="{% static "imgs/icons/medicine.png" %}" alt="medicine" class="zoom-in"></a>
+      <p>medicine</p>
+      <p>x 5</p>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+	var layer = new collie.Layer({
+		width: 700,
+		height: 500,
+	});
+	collie.ImageManager.add({
+		logo: "{% static "imgs/oreo_small.jpg" %}"
+	});
+	var logo = new collie.DisplayObject({
+		x: "center",
+		y: "center",
+		backgroundImage: "logo",
+		velocityRotate: 50
+	}).addTo(layer);
+	collie.Renderer.addLayer(layer);
+	collie.Renderer.load(document.getElementById("cat"));
+	collie.Renderer.start("30fps");
+</script>
+
+
+{% endblock %}

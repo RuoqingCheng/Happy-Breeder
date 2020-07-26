@@ -1,0 +1,27 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<div class="canvas-blue">
+  <div class="p-t-50">
+    <form method="POST" enctype="multipart/form-data" class="form-login">
+      {% csrf_token %}
+      <fieldset class="form-group">
+          <legend class="text-center">Please Sign Up</legend>
+          {{ form.as_p }}
+      </fieldset>
+
+      <div class="form-group p-b-100 text-center">
+        {% block bottombuttons %}
+          <button class="login-btn" type="submit">SIGN UP</button>
+        {% endblock %}
+      </div>
+    </form>
+  </div>
+
+</div>
+
+
+
+
+{% endblock %}

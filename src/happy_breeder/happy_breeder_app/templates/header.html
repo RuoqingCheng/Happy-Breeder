@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>{% block title %} Happy Breeder {% endblock %}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" href="{% static "imgs/icons/logo.png" %}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <!--For Plugins external css-->
+    <link rel="stylesheet" href="{% static "css/plugins.css" %}">
+    <!--Theme Responsive css-->
+    <link rel="stylesheet" href="{% static "css/responsive.css" %}">
+    <!--Theme custom css -->
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+
+    <script src="{% static "js/vendor/jquery-3.4.1.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/vendor/modernizr-2.8.3-respond-1.4.2.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/vendor/jquery-1.11.2.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/vendor/bootstrap.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/vendor/plugins.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/template.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/collie/collie.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/collie/collie.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/collie/collie.tool.min.js" %}"></script>
+    {% block headcontent %} {% endblock %}
+</head>
+
+
+<body>
+  <nav class="navbar navbar-default">
+      <div class="container">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href={% url "welcome" %}><img src="{% static "imgs/icons/logo.png" %}" alt="Logo" class="logo"></a>
+
+              {% block welcome %}
+              {% if user.is_authenticated %}
+              <span class="navbar-span"> Hi~ {{ user.nickname }}!</span>
+              {% else %}
+              <span class="navbar-span"> Welcome~ </span>
+              {% endif %}
+              {% endblock %}
+
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                  <!-- <li class="active"><a href="{% url 'store' %}">Store</a></li> -->
+                  <li class="active"><a href="{% url 'breederhome' %}">Breeder's Home</a></li>
+                  <!-- <li><a href="#">Account</a></li> -->
+                  <li><a href="#" data-toggle="modal" data-target="#manualModalScrollable" style="max-width: 340px;">Manual</a></li>
+                  {% if user.is_authenticated %}
+                  <li class="login"><a href="{% url 'logout' %}">LOG OUT</a></li>
+                  {% else %}
+                  <li class="login"><a href="{% url 'login' %}">LOG In</a></li>
+                  {% endif %}
+
+              </ul>
+          </div><!-- /.navbar-collapse -->
+
+      </div><!-- /.container-fluid -->
+  </nav>
+
+  <!--Modal for manual-->
+  <div class="modal fade" id="manualModalScrollable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">User's manual</h4>
+            </div>
+            <div class="modal-body">
+              <h4>Basics</h4>
+                <ul class="manual">
+                  <li>You get two kittens when you first time log in! </li>
+                  <li>Please feed them with food, clean them by scooping, and treat them with cat grass and medicine regularly to keep them happy and healthy.</li>
+                  <li>Brush cats can get furballs (fortune)! You can also visit others and get furballs from their cats</li>
+                </ul>
+              <h4>What do the values of the kittens mean?</h4>
+                <ul class="manual">
+                  <li>FURBALL: your cats can generate fur balls with time. You need furballs to purchase things in the store.</li>
+                  <li>FOOD: showing if your cats need to be fed. You can use items such as milk and can food to increase this value.</li>
+                  <li>CLEARNESS: showing if your cats need to be cleaned. You can use “scoop” button to increase this value.</li>
+                  <li>HEALTH: it will decrease if you don’t take care of your cats well.</li>
+                  <li>AGE: pets can mate with each other when pets is age 2 and the heart appears.</li>
+                </ul>
+              <h4>Breeder's Tip</h4>
+              <ul class="manual">
+                <li>If you get cats with wings, congradulations! If you use them for breeding, you have a higher chance to get offsprings of other breeds.</li>
+                <li>If you want to maintain the purity of your breeds, breed within the same kind.</li>
+                <li>Cats price depends on its purity, age, and breed.</li>
+              </ul>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <!-- <button type="button" class="btn btn-primary">提交更改</button> -->
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+  </div>
+
+  {% block content %}
+  {% endblock %}
+
+
+</body>

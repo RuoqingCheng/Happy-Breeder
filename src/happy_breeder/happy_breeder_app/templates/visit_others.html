@@ -1,0 +1,75 @@
+{% extends "cats.html" %}
+{% load static %}
+
+{% block headcontent %}
+{% endblock %}
+
+{% block welcome %}
+<span class="navbar-span"> {{ host_nickname }}'s home </span>
+{% endblock %}
+
+{% block canvas %}
+
+
+<div class="canvas-blue">
+
+  <div class="top-function text-center">
+
+    <!-- Add top functional icons -->
+    <div class="icon-label" onclick="Visit_Ajax();">
+        <a href="#"><img src="{% static "imgs/icons/paw.png" %}" alt="Go to other breeder's home" class="zoom-in"></a>
+        <p>Visit Other</p>
+    </div>
+    <!-- end top functional icons -->
+
+    <!-- add skill bar -->
+    <div class="block-skillbar">
+
+      <!-- <div class="skillbar clearfix " data-percent="{{user.experience}}">
+      	<div class="skillbar-title"><span>Exp</span></div>
+      	<div class="skillbar-bar" style="background:skyblue;"></div>
+      	<div class="skill-bar-percent">{{user.experience}}/1000</div>
+      </div> -->
+
+      <div class="skillbar clearfix " id="fortune_pct" data-percent="{{user.fortune}}">
+      	<div class="skillbar-title"><span>$</span></div>
+      	<div class="skillbar-bar" style="background:gold;"></div>
+      	<div class="skill-bar-percent" id="fortune">{{user.fortune}}/1000</div>
+      </div>
+
+    </div>
+    <!-- End Skill Bar -->
+  </div>
+  <!-- End of top functional bar -->
+
+  <!-- add side functional icons -->
+  <div class="container text-center m-t-70">
+    <div class="icon-label icon-label-right">
+        <a id="brush2" href="#"><img src="{% static "imgs/icons/brush.png" %}" alt="Brush" class="zoom-in"></a>
+        <p>Brush</p>
+    </div>
+  </div>
+  <!-- end side functional icons -->
+
+  <!-- litter box  -->
+  <img class="litter-box"src="{% static "imgs/litter.png" %}" alt="Litter box">
+
+</div>
+
+<!--record the host id-->>
+<input id="host_id" type="hidden" name="host_id" value={{ host_id }}>
+
+<!-- Warehouse -->
+
+<div class = "cat" id="cat">
+</div>
+
+<script type="text/javascript" src="{% static "js/skillbar.js" %}"></script>
+<script type="text/javascript" src="{% static "js/cat.js" %}"></script>
+<script type="text/javascript" src="{% static "js/house.js" %}"></script>
+
+
+<form style="display: hidden;" action="/other/" method="POST" id="visit_form_post">
+  {% csrf_token %}
+</form>
+{% endblock %}

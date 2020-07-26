@@ -1,0 +1,37 @@
+store:
+
+	front -> back:
+		XML: {"request_store": "true"}
+
+	back -> front:
+		json: {"item1ID": {"name": "", "img_url": "", "price": ""}, "item2ID": {"name": "", "img_url": "", "price": ""}}
+
+	front -> back:
+		XML: {"request_purchase": "true", "itemID": "", "amount": ""}
+
+	back -> front:
+		json: {"state": "success" or "fail", "user_fortune": "", "itemID": "", "amount": ""}
+
+interact:
+
+	front -> back:
+		XML: {"request_action": "true", "action": "itemID" or "brush" or "scoop", "cat_ID": ""}
+
+	back -> front:
+		json: {"state": "success" or "fail", "user_exp": "", "user_fortune": "", "item_ID": "None" or "", "amount": "None" or "", "cat_ID": "", "food_level": "", "clean_level": "", "health_level": ""}
+
+level_update:
+
+	front -> back:
+		HTML form: {"request_begin": "true", "time": ""}
+
+	back -> front:
+		HTTP response: {"state": "success" or "fail", "cats": "", "user": "", "items": "", "next_request": ""}
+
+	# for auto-update
+
+	front -> back:
+		XML: {"request_update": "true", "time": ""}
+
+	back -> front:
+		json: {"state": "success" or "fail", "catID": {"food_level": "", "clean_level": "", "health_level": ""}, "catID": {"food_level": "", "clean_level": "", "health_level": ""}}
