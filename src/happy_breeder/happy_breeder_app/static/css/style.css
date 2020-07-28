@@ -1731,7 +1731,7 @@ xkeyframes
 .canvas-blue {
   display:block;
   float:left;
-  width:1000px;
+  width:1180px;
   height:500px;
   margin:0 30px;
   background-color:#BDFDEF;
@@ -1778,13 +1778,13 @@ xkeyframes
 }
 
 .warehouse-item{
-  width:70px;
+  width:100px;
 }
 
 .icon-label-right {
   top:90px;
   position: relative;
-  left: 880px;
+  left: 1000px;
 }
 
 .icon-label > a > img{
@@ -1796,7 +1796,7 @@ xkeyframes
 
 .litter-box {
   top: 420px;
-  left: 850px;
+  left: 970px;
   width: 140px;
   position: absolute;
 }
@@ -1861,7 +1861,7 @@ xkeyframes
   border-style: solid;
   border-color: #BDFDEF;
   border-width: 1px;
-  width:1000px;
+  width:1180px;
   height:110px;
   margin:0 30px;
   margin-bottom:20pt;
@@ -1888,7 +1888,7 @@ xkeyframes
   display: inline-block;
   position: absolute;
   top: 20px;
-  left:800px;
+  left:910px;
   width:152px;
   height:30px;
   padding: 0;
@@ -1954,7 +1954,7 @@ xkeyframes
 .cat {
   width:70px;
   height:50px;
-  top:170px;
+  top:170px;s
   left:50px;
   position:absolute;
 }
@@ -1966,12 +1966,4 @@ xkeyframes
 
 li {
   padding:4px;
-}
-
-
-li.img_1
-{
-background-image: url('../imgs/icons/brush.png');
-background-repeat: no-repeat;
-margin-left: 35px;
 }

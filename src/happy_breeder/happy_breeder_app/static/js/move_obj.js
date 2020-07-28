@@ -88,7 +88,7 @@ collie.util.addEventListener(window, "load", function () {
   var htSelectedDisplayObjectPosition = {};
 
   var cat_cereal = new Cat({
-    x: 300,
+    x: 400,
     y: 20,
     scaleX: 0.3,
     scaleY: 0.3,
@@ -128,7 +128,7 @@ collie.util.addEventListener(window, "load", function () {
 
 {% for c in cats %}
 var cat = new Cat({
-  x: 200,
+  x: 300,
   y: 100,
   scaleX: 0.3,
   scaleY: 0.3,

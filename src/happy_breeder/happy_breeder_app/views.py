@@ -25,7 +25,7 @@ AGE_AMOUNT = 0.2
 REFRESH_INTERVAL = 30
 
 def random_pos():
-	x = random.randint(130, 660)
+	x = random.randint(130, 700)
 	y = random.randint(-70, 140)
 	return x,y
 
