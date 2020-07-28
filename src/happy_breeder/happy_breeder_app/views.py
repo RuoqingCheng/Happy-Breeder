@@ -146,6 +146,8 @@ def action(request):
 				data['status'] = 'success'
 				data['sold'] = 'true'
 				data['user_fortune'] = str(request.user.fortune)
+			else:
+				data['sold'] = 'false'
 		elif (action == 'mate'):
 			can_mate = False
 			cat_1 = Pet.objects.get(id=request.GET.get('cat_id'))

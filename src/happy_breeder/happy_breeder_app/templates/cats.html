@@ -57,6 +57,10 @@
     $('.btn_buy').click(function (e) {
       var item_id =  $(this).attr("id");
       var amount = $('#'+item_id+'quantity').val();
+      var item_name = $(this).attr("value");
+      var success_message = `Success! You have bought ${amount} ${item_name}!`
+      alert(success_message);
+
       $.ajax({
           url: '{% url "buy_item" %}',
           data: {
@@ -96,6 +100,7 @@
     });
   });
 </script>
+
 
 <script type="text/javascript">
 
@@ -223,11 +228,17 @@
 
           if (has_action == 1) {
             reset();
-
+            var action_boolean = 'true'
+            if (action == 'sell'){
+              var r = confirm("Are you sure you are OK to SELL this cat?" );
+              if (r == false) {
+                  action_boolean = 'false';
+              }
+            }
             $.ajax({
               url: '{% url "action" %}',
               data: {
-                'request_action': 'true',
+                'request_action': action_boolean,
                 'action': action,
                 'cat_id': oEvent.displayObject.get("id"),
                 'cat_id2': cat_id2,
@@ -237,6 +248,9 @@
                 if (data.mate_status != undefined && data.mate_status == 'fail') {
                   // console.log("mate fail");
                   alert(data["message"] + "Please choose cats with heart sign to mate!");
+                }
+                if (data.sold != undefined && data.sold == 'false') {
+                  alert("You cannot sell cat when you only have two cats. Let's breed for more cats!")
                 }
                 if (data.status == 'success') {
                   if (data.fur_amount !== undefined && data.user_fortune !== undefined) {

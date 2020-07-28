@@ -1967,3 +1967,11 @@ xkeyframes
 li {
   padding:4px;
 }
+
+
+li.img_1
+{
+background-image: url('../imgs/icons/brush.png');
+background-repeat: no-repeat;
+margin-left: 35px;
+}

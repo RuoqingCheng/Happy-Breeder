@@ -80,9 +80,10 @@
   <!-- litter box  -->
   <img class="litter-box"src="{% static "imgs/litter.png" %}" alt="Litter box">
 
-  <!-- Cat -->
+</div>
 
-  <!-- Store -->
+
+<!-- Store -->
   <!-- Code for store pop up below -->
 
   <!-- Modal -->
@@ -133,21 +134,22 @@
                 <!-- quantity increment buttons: cited from https://bootsnipp.com/snippets/e3q3a -->
                 <div class="input-group" style="width: fit-content;">
                   <span class="input-group-btn">
-                    <button type="button" id="{{item.id}}" class="btn-minus btn" data-type="minus" data-field="" style="width: 10px;">
+                    <button type="button" id="{{item.id}}" class="btn-minus btn" data-type="minus" data-field="" style="width: 20px">
                       <span>-</span>
                     </button>
                   </span>
-                  <input type="text" id="{{item.id}}quantity" class="form-control input-number quantity" value="1" min="1" style="max-width: 54px; text-align: center;">
+                  <input type="text" id="{{item.id}}quantity" class="form-control input-number quantity" value="1" min="1" style="max-width: 54px; text-align: center; height: 50px;">
                   <span class="input-group-btn">
-                    <button type="button" id="{{item.id}}" class="btn-plus btn" data-type="plus" data-field="" style="width: 10px;">
+                    <button type="button" id="{{item.id}}" class="btn-plus btn" data-type="plus" data-field="" style="width: 20px;">
                       <span>+</span>
                     </button>
                   </span>
                 </div>
               </div>
               <div class="col-md-3">
-                <button type="button" id="{{item.id}}" class="btn-primary btn-lg btn_buy">Buy</button>
+                <button type="button" id="{{item.id}}" value = "{{item.name}}" class="btn-primary btn-lg btn_buy">Buy</button>
               </div>
+
             </div>
           </div>
           <br>
@@ -166,9 +168,8 @@
     </div>
     <!-- end of the modal-dialog modal-dialog-scrollable -->
   </div>
-  <!-- end of the Modal -->
+  <!-- end of the store pop up modal -->
 
-</div>
 
 <!--Modal for visit history-->
 <div class="modal fade" id="historyModalScrollable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
